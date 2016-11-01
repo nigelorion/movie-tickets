@@ -1,4 +1,4 @@
-function Ticket(movie, time, price) {
+function Ticket(movie, time, age, price) {
   this.movie = movie;
   this.time = time;
   this.age = age
@@ -6,29 +6,34 @@ function Ticket(movie, time, price) {
 }
 
 Ticket.prototype.userTicketInfo = function() {
-  return ("You have selected " + this.movie + "." "Your movie will begin at " + this.time "." "The total cost for this movie is " + this.price ".");
+  return ("You just bought a ticket for " + this.movie + " at " + this.time + ".") + ("\nYour info: \n"  + " age: " + this.age + " Price: " + this.price);
 }
 
- function ticketPrice(userAge, reducedPrice) {
-   if(userAge <)
+function ticketPrice(showTime, userAge) {
+   var price;
+   if(showTime <= 3) {
+     price = "$5.00";
+   } else if (userAge === 3 && showTime > 3){
+     price = "$7.00";
+   } else {
+     price = "$10.00";
+   }
+   return price;
+ };
 
- }
-
-
-
-$(document)ready(function() {
+$(document).ready(function() {
   $("form").submit(function(event) {
     event.preventDefault();
 
     var movieTitle = $("#movie").val();
     var movieTime = parseInt($("#time").val());
     var age = parseInt($("#age").val());
-    var price = ticketPrice(age, movieTime);
+    var price = ticketPrice(movieTime, age);
+    var movieTimeText = $("#time option:selected").text();
+    var ageText = $("#age option:selected").text();
 
-    var newTicket = new Ticket(movieTitle, movieTime,)
+    var newTicket = new Ticket(movieTitle, movieTimeText, ageText, price);
 
-
-
-
-  };
+    $("#ticketOutput").text(newTicket.userTicketInfo());
+  });
 });
